@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arxiv Digest — 2026-04-10</title>
+<style>
+:root { --fg:#222; --muted:#777; --accent:#b0413e; --border:#e5e5e5; --bg:#fdfdfc; --card:#f7f5ef; }
+* { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+       max-width: 760px; margin: 3em auto; padding: 0 1.2em;
+       color: var(--fg); background: var(--bg); line-height: 1.6; }
+h1 { font-size: 1.5em; border-bottom: 2px solid var(--fg); padding-bottom: .3em; margin-bottom: .3em; }
+.sub { color: var(--muted); font-size: .92em; margin-top: 0; }
+.nav { margin-bottom: 2em; }
+.nav a { color: var(--muted); text-decoration: none; font-size: .9em; }
+.nav a:hover { color: var(--accent); }
+.summary { background: var(--card); padding: 1em 1.2em; border-radius: 4px;
+           margin: 1.5em 0 2em; font-size: .95em; color: #333; }
+.paper { margin: 2em 0; padding-bottom: 1.6em; border-bottom: 1px solid var(--border); }
+.paper:last-child { border-bottom: none; }
+.score { float: right; font-weight: 600; color: var(--accent); font-size: .95em;
+         font-variant-numeric: tabular-nums; }
+.paper h2 { font-size: 1.1em; margin: 0 0 .35em; line-height: 1.35; font-weight: 600; }
+.paper h2 a { color: var(--fg); text-decoration: none; }
+.paper h2 a:hover { color: var(--accent); }
+.meta { color: var(--muted); font-size: .88em; margin-bottom: .6em; }
+.why { background: var(--card); border-left: 3px solid var(--accent);
+       padding: .55em .85em; margin: .6em 0; font-size: .93em; color: #3a3a3a; }
+.abstract { color: #444; font-size: .93em; }
+.abstract.collapsed { max-height: 5.2em; overflow: hidden; position: relative; }
+.abstract.collapsed::after { content: ""; position: absolute; bottom: 0; left: 0; right: 0;
+                              height: 2em; background: linear-gradient(transparent, var(--bg)); }
+details { font-size: .9em; margin-top: .4em; }
+details summary { cursor: pointer; color: var(--muted); }
+details[open] summary { color: var(--accent); }
+footer { margin-top: 4em; color: var(--muted); font-size: .85em; text-align: center; }
+</style>
+</head>
+<body>
+<div class="nav"><a href="../index.html">← all digests</a></div>
+<h1>Arxiv Daily Digest</h1>
+<p class="sub">2026-04-10 · math.OC &amp; cross-listed · optimization dynamics, spectral optimizers</p>
+
+<div class="summary">Quiet day for optimization-dynamics and spectral-optimizer work — today&#39;s math.OC listing is dominated by classical control (MPC, reachability) with only a handful of ML-adjacent theory papers. Top hit: a rigorous one-layer-NN gradient-descent analysis with spectral bias and a new activation. Also worth skimming: a rank-decay analysis of Sinkhorn-normalized attention, and a structural result on PŁ functions from Boumal et al.</div>
+
+
+<article class="paper">
+  <span class="score" title="taste match">0.72</span>
+  <h2><a href="https://arxiv.org/abs/2604.07715">Mathematical analysis of one-layer neural network with fixed biases, a new activation function and other observations</a></h2>
+  <div class="meta">Fabricio Macià, Shu Nakamura · arXiv:2604.07715 · cs.LG</div>
+  <div class="why">Exactly in your lane: rigorous gradient-descent convergence on a one-hidden-layer ReLU net with L2 loss, plus a spectral-bias proof. Simple NN proxies + training-dynamics — same template as your linear-regression / bigram references.</div>
+  <details>
+    <summary>abstract</summary>
+    <div class="abstract">We analyze a simple one-hidden-layer neural network with ReLU activation functions and fixed biases, with one-dimensional input and output. We study both continuous and discrete versions of the model, and we rigorously prove the convergence of the learning process with the L^2 squared loss function and the gradient descent procedure. We also prove the spectral bias property for this learning process. Several conclusions of this analysis are discussed; in particular, regarding the structure and properties that activation functions should possess, as well as the relationships between the spectrum of certain operators and the learning process. Based on this, we also propose an alternative activation function, the full-wave rectified exponential function (FReX), and we discuss the convergence of the gradient descent with this alternative activation function.</div>
+  </details>
+</article>
+
+<article class="paper">
+  <span class="score" title="taste match">0.61</span>
+  <h2><a href="https://arxiv.org/abs/2604.07925">Sinkhorn doubly stochastic attention rank decay analysis</a></h2>
+  <div class="meta">Michela Lapenna, Rita Fioresi, Bahman Gharesifard · arXiv:2604.07925 · cs.LG</div>
+  <div class="why">Transformer training-dynamics flavor: theoretical bound on rank collapse under Sinkhorn-normalized attention, showing doubly exponential decay with depth. Adjacent to why Muon / preconditioning matter for deep networks.</div>
+  <details>
+    <summary>abstract</summary>
+    <div class="abstract">The self-attention mechanism is central to the success of Transformer architectures. However, standard row-stochastic attention has been shown to suffer from significant signal degradation across layers. In particular, it can induce rank collapse, resulting in increasingly uniform token representations, as well as entropy collapse. Recent work has highlighted the benefits of doubly stochastic attention as a form of entropy regularization. In this paper, we study rank collapse across network depth and show that doubly stochastic attention matrices normalized with Sinkhorn algorithm preserve rank more effectively than standard Softmax row-stochastic ones. We derive a theoretical bound for the pure self-attention rank decay when using Sinkhorn normalization and find that rank decays to one doubly exponentially with depth.</div>
+  </details>
+</article>
+
+<article class="paper">
+  <span class="score" title="taste match">0.56</span>
+  <h2><a href="https://arxiv.org/abs/2604.07972">Smooth, globally Polyak-Łojasiewicz functions are nonlinear least-squares</a></h2>
+  <div class="meta">Nicolas Boumal, Christopher Criscitiello, Quentin Rebjock · arXiv:2604.07972 · math.OC</div>
+  <div class="why">Structural rigidity result for the PŁ condition — the standard &#34;beyond strong convexity&#34; assumption used everywhere in deep-learning optimization theory. Boumal et al. show smooth PŁ functions on contractible manifolds are *exactly* nonlinear sums-of-squares, which directly bears on what assumptions do and do not constrain landscape geometry.</div>
+  <details>
+    <summary>abstract</summary>
+    <div class="abstract">The Polyak-Łojasiewicz (PŁ) condition is often invoked in nonconvex optimization because it allows fast convergence of algorithms beyond strong convexity. A function f on a Riemannian manifold M is globally PŁ if ||∇f(x)||² ≥ 2μ(f(x) − f*) for all x. We show that if f is also smooth and M is contractible, then the PŁ condition imposes a firm global structure: such a function is necessarily of the form f(x) = f* + ||φ(x)||² (a nonlinear sum of squares) where φ is a submersion. The proof hinges on showing that the end-point map of negative gradient flow on f is a trivial smooth fiber bundle over S. This leads to a striking dichotomy: either the minimizer set is diffeomorphic to Euclidean space (and f becomes a convex quadratic under smooth coordinates), or S must display genuinely exotic geometry.</div>
+  </details>
+</article>
+
+<article class="paper">
+  <span class="score" title="taste match">0.42</span>
+  <h2><a href="https://arxiv.org/abs/2604.08236">Improved Convergence for Decentralized Stochastic Optimization with Biased Gradients</a></h2>
+  <div class="meta">Qing Xu, Yiwei Liao, Wenqi Fan, Xingxing You, Songyi Dian · arXiv:2604.08236 · math.OC</div>
+  <div class="why">SGD-style nonconvex convergence theory, but in the decentralized + biased-gradient-oracle regime. Tangential to your core interest (optimization dynamics of single-node deep learning), but the bias-handling analysis could be useful if you care about compressed-communication effects on training.</div>
+  <details>
+    <summary>abstract</summary>
+    <div class="abstract">Decentralized stochastic optimization has emerged as a fundamental paradigm for large-scale machine learning. However, practical implementations often rely on biased gradient estimators arising from communication compression or inexact local oracles, which severely degrade convergence. We propose Decentralized Momentum Tracking with Biased Gradients (Biased-DMT). We establish a comprehensive convergence theory in nonconvex settings and show it achieves linear speedup in the number of agents. The analysis decouples network topology from data heterogeneity. When the gradient oracle introduces only absolute bias, the method eliminates structural heterogeneity error and converges to the exact physical error floor.</div>
+  </details>
+</article>
+
+<article class="paper">
+  <span class="score" title="taste match">0.38</span>
+  <h2><a href="https://arxiv.org/abs/2604.08219">Stochastic Momentum Tracking Push-Pull for Decentralized Optimization over Directed Graphs</a></h2>
+  <div class="meta">Wenqi Fan, Yiwei Liao, Qing Xu, Bin Guo, Songyi Dian · arXiv:2604.08219 · math.OC</div>
+  <div class="why">Momentum + variance reduction analysis, but again in the decentralized-network regime rather than centralized deep-learning training. Skim-level interest.</div>
+  <details>
+    <summary>abstract</summary>
+    <div class="abstract">Decentralized optimization over directed networks is frequently challenged by asymmetric communication and the inherent high variance of stochastic gradients. We propose the Stochastic Momentum Tracking Push-Pull (SMTPP) algorithm, which tracks the momentum term rather than raw stochastic gradients within the Push-Pull architecture. This design decouples the variance reduction capacity from the algebraic connectivity of the graph. SMTPP rigorously compresses the unavoidable steady-state error floor into a minimal neighborhood determined by network connectivity and gradient variance.</div>
+  </details>
+</article>
+
+<article class="paper">
+  <span class="score" title="taste match">0.28</span>
+  <h2><a href="https://arxiv.org/abs/2604.07662">Parameter-free non-ergodic extragradient algorithms for solving monotone variational inequalities</a></h2>
+  <div class="meta">Lingqing Shen, Fatma Kılınç-Karzan · arXiv:2604.07662 · math.OC</div>
+  <div class="why">Last-iterate convergence analysis — interesting from a dynamics lens since most SGD theory also moved from averaged to last-iterate recently. Not directly about deep-learning optimizers, but the proof techniques travel.</div>
+  <details>
+    <summary>abstract</summary>
+    <div class="abstract">Monotone variational inequalities provide a unifying framework for convex minimization, equilibrium computation, and convex-concave saddle-point problems. We develop parameter-free extragradient methods with non-asymptotic last-iterate guarantees. For globally Lipschitz operators, our algorithm achieves an o(1/√T) last-iterate rate. We then extend the framework to locally Lipschitz operators via backtracking line search.</div>
+  </details>
+</article>
+
+
+<footer>Generated by a scheduled Claude agent · <a href="https://github.com/Bianbian2002/arxiv-daily-digest">source</a></footer>
+</body>
+</html>

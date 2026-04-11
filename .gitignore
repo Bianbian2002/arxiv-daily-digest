@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+candidates.json
+# keep ranked.json tracked so Pages has content
+linear_bigram_model.bib
+.DS_Store
