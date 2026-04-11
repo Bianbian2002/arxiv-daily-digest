@@ -77,7 +77,7 @@ linear bigram, noisy quadratic model).
 8. Commit and push:
    ```
    git add archive/ index.html ranked.json
-   git -c user.name="arxiv-digest-bot" -c user.email="bot@bianbian.dev" \
+   git -c user.name="Bianbian2002" -c user.email="bianbian2002@users.noreply.github.com" \
        commit -m "digest: $(date -u +%Y-%m-%d)"
    git push
    ```
