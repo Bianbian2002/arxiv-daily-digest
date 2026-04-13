@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arxiv Digest — 2026-04-13</title>
+<style>
+:root { --fg:#222; --muted:#777; --accent:#b0413e; --border:#e5e5e5; --bg:#fdfdfc; --card:#f7f5ef; }
+* { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+       max-width: 760px; margin: 3em auto; padding: 0 1.2em;
+       color: var(--fg); background: var(--bg); line-height: 1.6; }
+h1 { font-size: 1.5em; border-bottom: 2px solid var(--fg); padding-bottom: .3em; margin-bottom: .3em; }
+.sub { color: var(--muted); font-size: .92em; margin-top: 0; }
+.nav { margin-bottom: 2em; }
+.nav a { color: var(--muted); text-decoration: none; font-size: .9em; }
+.nav a:hover { color: var(--accent); }
+.summary { background: var(--card); padding: 1em 1.2em; border-radius: 4px;
+           margin: 1.5em 0 2em; font-size: .95em; color: #333; }
+.paper { margin: 2em 0; padding-bottom: 1.6em; border-bottom: 1px solid var(--border); }
+.paper:last-child { border-bottom: none; }
+.score { float: right; font-weight: 600; color: var(--accent); font-size: .95em;
+         font-variant-numeric: tabular-nums; }
+.paper h2 { font-size: 1.1em; margin: 0 0 .35em; line-height: 1.35; font-weight: 600; }
+.paper h2 a { color: var(--fg); text-decoration: none; }
+.paper h2 a:hover { color: var(--accent); }
+.meta { color: var(--muted); font-size: .88em; margin-bottom: .6em; }
+.why { background: var(--card); border-left: 3px solid var(--accent);
+       padding: .55em .85em; margin: .6em 0; font-size: .93em; color: #3a3a3a; }
+.abstract { color: #444; font-size: .93em; }
+.abstract.collapsed { max-height: 5.2em; overflow: hidden; position: relative; }
+.abstract.collapsed::after { content: ""; position: absolute; bottom: 0; left: 0; right: 0;
+                              height: 2em; background: linear-gradient(transparent, var(--bg)); }
+details { font-size: .9em; margin-top: .4em; }
+details summary { cursor: pointer; color: var(--muted); }
+details[open] summary { color: var(--accent); }
+footer { margin-top: 4em; color: var(--muted); font-size: .85em; text-align: center; }
+</style>
+</head>
+<body>
+<div class="nav"><a href="../index.html">← all digests</a></div>
+<h1>Arxiv Daily Digest</h1>
+<p class="sub">2026-04-13 · math.OC &amp; cross-listed · optimization dynamics, spectral optimizers</p>
+
+<div class="summary">Strongest hit today: a Fisher-information-geometric analysis of SGD noise that endogenizes the diffusion coefficient and derives matching oracle-complexity bounds. Also notable: a convergent reformulation of Adam with accelerated rates via Lyapunov analysis, and a natural-gradient method for tensor networks. Most of the listing is classical control, PDE-constrained optimization, and applied OR.</div>
+
+
+<article class="paper">
+  <span class="score" title="taste match">0.92</span>
+  <h2><a href="https://arxiv.org/abs/2603.02417">Fisher-Geometric Diffusion in Stochastic Gradient Descent: Optimal Rates, Oracle Complexity, and Information-Theoretic Limits</a></h2>
+  <div class="meta">Daniel Zantedeschi, Kumar Muthuraman · arXiv:2603.02417 · stat.ML</div>
+  <div class="why">Core optimization-dynamics paper: endogenizes the SGD noise covariance via the sampling mechanism (projected Fisher information), then derives matching upper/lower oracle-complexity bounds in the Fisher metric. Directly extends the SDE-for-SGD line from your taste anchors (Battash et al., Jain et al.) with a structural identification of the diffusion coefficient rather than assuming it exogenously.</div>
+  <details>
+    <summary>abstract</summary>
+    <div class="abstract">Classical stochastic-approximation analyses treat the covariance of stochastic gradients as an exogenous modeling input. We show that under exchangeable mini-batch sampling this covariance is identified by the sampling mechanism itself: to leading order it is the projected covariance of per-sample gradients. In well-specified likelihood problems this reduces locally to projected Fisher information; for general M-estimation losses the same object is the projected gradient covariance G*(theta), which together with the Hessian induces sandwich/Godambe geometry. This identification -- not the subsequent diffusion or Lyapunov machinery, which is classical once the noise matrix is given -- is the paper&#39;s main contribution. It endogenizes the diffusion coefficient (with effective temperature tau = eta/b), determines the stationary covariance via a Lyapunov equation whose inputs are now structurally fixed, and selects the identified statistical geometry as the natural metric for convergence analysis. We prove matching upper and lower bounds of order Theta(1/N) for risk in this metric under an oracle budget N; the lower bound is established first via a van Trees argument in the parametric Fisher setting and then extended to adaptive oracle transcripts under a predictable-information condition and mild conditional likelihood regularity. Translating these bounds into oracle complexity yields epsilon-stationarity guarantees in the Fisher dual norm that depend on an intrinsic effective dimension d_eff and a statistical condition number kappa_F, rather than ambient dimension or Euclidean conditioning. Numerical experiments confirm the Lyapunov predictions at both continuous-time and discrete-time levels and show that scalar temperature matching cannot reproduce directional noise structure.</div>
+  </details>
+</article>
+
+<article class="paper">
+  <span class="score" title="taste match">0.82</span>
+  <h2><a href="https://arxiv.org/abs/2604.08742">Adam-HNAG: A Convergent Reformulation of Adam with Accelerated Rate</a></h2>
+  <div class="meta">Yaxin Yu, Long Chen, Zeyi Xu · arXiv:2604.08742 · math.OC</div>
+  <div class="why">First convergence proof for an Adam-type method in convex optimization, achieved by decoupling adaptive preconditioning from momentum via operator splitting. Directly relevant to your interest in understanding spectral/preconditioned optimizers (Muon, Adam) theoretically. The Lyapunov analysis framework may connect to the scaling-law machinery in Kunstner &amp; Bach.</div>
+  <details>
+    <summary>abstract</summary>
+    <div class="abstract">Adam has achieved strong empirical success, but its theory remains incomplete even in the deterministic full-batch setting, largely because adaptive preconditioning and momentum are tightly coupled. In this work, a convergent reformulation of full-batch Adam is developed by combining variable and operator splitting with a curvature-aware gradient correction. This leads to a continuous-time Adam-HNAG flow with an exponentially decaying Lyapunov function, as well as two discrete methods: Adam-HNAG, and Adam-HNAG-s, a synchronous variant closer in form to Adam. Within a unified Lyapunov analysis framework, convergence guarantees are established for both methods in the convex smooth setting, including accelerated convergence. Numerical experiments support the theory and illustrate the different empirical behavior of the two discretizations. To the best of our knowledge, this provides the first convergence proof for Adam-type methods in convex optimization.</div>
+  </details>
+</article>
+
+<article class="paper">
+  <span class="score" title="taste match">0.52</span>
+  <h2><a href="https://arxiv.org/abs/2604.09263">Natural Riemannian gradient for learning functional tensor networks</a></h2>
+  <div class="meta">Nikolas Klug, Michael Ulbrich, André Uschmajew, Marius Willner · arXiv:2604.09263 · math.OC</div>
+  <div class="why">Natural gradient (Fisher-metric preconditioning) applied to tensor network optimization. The basis-invariance property and the hierarchy of practical approximations echo the motivation behind Muon-style matrix preconditioners. Weaker match because the application is tensor decomposition rather than neural net training.</div>
+  <details>
+    <summary>abstract</summary>
+    <div class="abstract">We consider machine learning tasks with low-rank functional tree tensor networks (TTN) as the learning model. While in the case of least-squares regression, low-rank functional TTNs can be efficiently optimized using alternating optimization, this is not directly possible in other problems, such as multinomial logistic regression. We propose a natural Riemannian gradient descent type approach applicable to arbitrary losses which is based on the natural gradient by Amari. In particular, the search direction obtained by the natural gradient is independent of the choice of basis of the underlying functional tensor product space. Our framework applies to both the factorized and manifold-based approach for representing the functional TTN. For practical application, we propose a hierarchy of efficient approximations to the true natural Riemannian gradient for computing the updates in the parameter space. Numerical experiments confirm our theoretical findings on common classification datasets and show that using natural Riemannian gradient descent for learning considerably improves convergence behavior when compared to standard Riemannian gradient methods.</div>
+  </details>
+</article>
+
+<article class="paper">
+  <span class="score" title="taste match">0.40</span>
+  <h2><a href="https://arxiv.org/abs/2604.08580">Adjoint Matching through the Lens of the Stochastic Maximum Principle in Optimal Control</a></h2>
+  <div class="meta">Carles Domingo-Enrich, Jiequn Han · arXiv:2604.08580 · math.OC</div>
+  <div class="why">Rigorous SDE-based optimal control for diffusion/flow model fine-tuning. The continuous-time successive-approximation interpretation is interesting from a training-dynamics perspective, though the application (generative modeling) is outside your core focus.</div>
+  <details>
+    <summary>abstract</summary>
+    <div class="abstract">Reward fine-tuning of diffusion and flow models and sampling from tilted or Boltzmann distributions can both be formulated as stochastic optimal control (SOC) problems, where learning an optimal generative dynamics corresponds to optimizing a control under SDE constraints. In this work, we revisit and generalize Adjoint Matching, a recently proposed SOC-based method for learning optimal controls, and place it on a rigorous footing by deriving it from the Stochastic Maximum Principle (SMP). We formulate a general Hamiltonian adjoint matching objective for SOC problems with control-dependent drift and diffusion and convex running costs, and show that its expected value has the same first variation as the original SOC objective. As a consequence, critical points satisfy the Hamilton--Jacobi--Bellman (HJB) stationarity conditions. In the important practical case of state- and control-independent diffusion, we recover the lean adjoint matching loss previously introduced in adjoint matching, which avoids second-order terms and whose critical points coincide with the optimal control under mild uniqueness assumptions. Finally, we show that adjoint matching can be precisely interpreted as a continuous-time method of successive approximations induced by the SMP, yielding a practical and implementable alternative to classical SMP-based algorithms, which are obstructed by intractable martingale terms in the stochastic setting.</div>
+  </details>
+</article>
+
+<article class="paper">
+  <span class="score" title="taste match">0.35</span>
+  <h2><a href="https://arxiv.org/abs/2604.09245">A Nesterov-Accelerated Primal-Dual Splitting Algorithm for Convex Nonsmooth Optimization</a></h2>
+  <div class="meta">Laurent Condat, Abdurakhmon Sadiev, Peter Richtárik · arXiv:2604.09245 · math.OC</div>
+  <div class="why">Optimal O(1/t^2) rates for accelerated primal-dual splitting via a unified Lyapunov framework. Methodologically solid first-order-methods theory from Richtarik&#39;s group. Tangential to your core interests but the Lyapunov technique may be reusable.</div>
+  <details>
+    <summary>abstract</summary>
+    <div class="abstract">We investigate the integration of Nesterov-type acceleration into primal-dual methods for structured convex optimization. While proximal splitting algorithms efficiently handle composite problems of the form $\min_x f(x)+g(x)+h(Kx)$, accelerating their convergence with respect to the smooth term $f$ is notoriously challenging due to the rotational dynamics in the primal-dual space. In this paper, we overcome this barrier by proposing the Accelerated Proximal Alternating Predictor-Corrector algorithm (APAPC), focusing on the setting where $g(x)=\frac{μ_g}{2}\|x\|^2$. Our analysis reveals that Nesterov momentum can be seamlessly integrated into a primal-dual forward-backward scheme by exploiting the strong convexity of the dual problem to stabilize the accelerated primal updates. Using a unified Lyapunov framework, we establish optimal $O(1/t^2)$ sublinear convergence rates, as well as accelerated linear convergence when $μ_g &gt; 0$, across three regimes of dual strong convexity.</div>
+  </details>
+</article>
+
+<article class="paper">
+  <span class="score" title="taste match">0.33</span>
+  <h2><a href="https://arxiv.org/abs/2603.25182">Learning Monge maps with constrained drifting models</a></h2>
+  <div class="meta">Théo Dumont, Théo Lacombe, François-Xavier Vialard · arXiv:2603.25182 · math.OC</div>
+  <div class="why">Natural gradient descent in the space of convex-potential neural networks for learning OT maps, outperforming Adam. The interplay between geometry of the parameter space and optimizer choice resonates with the preconditioner theme, though the setting is optimal transport rather than standard training.</div>
+  <details>
+    <summary>abstract</summary>
+    <div class="abstract">We study the estimation of optimal transport (OT) maps between an arbitrary source probability measure and a log-concave target probability measure. Our contributions are twofold. First, we propose a new evolution equation in the set of transport maps. It can be seen as the gradient flow of a lift of some user-chosen divergence (e.g., the KL divergence, or relative entropy) to the space of transport maps, constrained to the convex set of optimal transport maps. We prove the existence of long-time solutions to this flow as well as its convergence toward the OT map as time goes to infinity, under standard convexity conditions on the divergence. Second, we study the practical implementation of this constrained gradient flow. We propose two time-discrete computational schemes-one explicit, one implicit-, and we prove the convergence of the latter to the OT map as time goes to infinity. We then parameterize the OT maps with convexity-constrained neural networks and train them with these discretizations of the constrained gradient flow. We show that this is equivalent to performing a natural gradient descent of the lift of the chosen divergence in the neural networks&#39; parameter space, similarly to drifting generative models.</div>
+  </details>
+</article>
+
+<article class="paper">
+  <span class="score" title="taste match">0.28</span>
+  <h2><a href="https://arxiv.org/abs/2506.11267">Towards faster first order methods: A continuous-time model to interpolate between speed and function value restart</a></h2>
+  <div class="meta">Juan José Maulén, Huiyuan Guo, Juan Peypouquet · arXiv:2506.11267 · math.OC</div>
+  <div class="why">Continuous-time ODE analysis of accelerated methods with Hessian-driven damping and adaptive restarts. Parameter-free (no need for strong convexity constant). Niche but connects to the optimization-dynamics viewpoint.</div>
+  <details>
+    <summary>abstract</summary>
+    <div class="abstract">We introduce a new restarting scheme for a continuous inertial dynamics with Hessian driven-damping, and establish a linear convergence rate for the function values along the restarted trajectories. The proposed routine is implemented without knowing the strong convexity parameter, and is a generalization of existing speed restart schemes. It interpolates between speed and function value restarts, considerably delaying the restarting time, while preserving convergence and function value decrease. Numerical experiments show an improvement in the convergence rates for both continuous-time dynamical systems, and the associated accelerated first-order algorithms derived via time discretization.</div>
+  </details>
+</article>
+
+
+<footer>Generated by a scheduled Claude agent · <a href="https://github.com/Bianbian2002/arxiv-daily-digest">source</a></footer>
+</body>
+</html>

@@ -1,60 +1,69 @@
 {
-  "date": "2026-04-10",
-  "summary": "Quiet day for optimization-dynamics and spectral-optimizer work — today's math.OC listing is dominated by classical control (MPC, reachability) with only a handful of ML-adjacent theory papers. Top hit: a rigorous one-layer-NN gradient-descent analysis with spectral bias and a new activation. Also worth skimming: a rank-decay analysis of Sinkhorn-normalized attention, and a structural result on PŁ functions from Boumal et al.",
+  "date": "2026-04-13",
+  "summary": "Strongest hit today: a Fisher-information-geometric analysis of SGD noise that endogenizes the diffusion coefficient and derives matching oracle-complexity bounds. Also notable: a convergent reformulation of Adam with accelerated rates via Lyapunov analysis, and a natural-gradient method for tensor networks. Most of the listing is classical control, PDE-constrained optimization, and applied OR.",
   "papers": [
     {
-      "arxiv_id": "2604.07715",
-      "title": "Mathematical analysis of one-layer neural network with fixed biases, a new activation function and other observations",
-      "authors": ["Fabricio Macià", "Shu Nakamura"],
-      "primary_category": "cs.LG",
-      "score": 0.72,
-      "why": "Exactly in your lane: rigorous gradient-descent convergence on a one-hidden-layer ReLU net with L2 loss, plus a spectral-bias proof. Simple NN proxies + training-dynamics — same template as your linear-regression / bigram references.",
-      "abstract": "We analyze a simple one-hidden-layer neural network with ReLU activation functions and fixed biases, with one-dimensional input and output. We study both continuous and discrete versions of the model, and we rigorously prove the convergence of the learning process with the L^2 squared loss function and the gradient descent procedure. We also prove the spectral bias property for this learning process. Several conclusions of this analysis are discussed; in particular, regarding the structure and properties that activation functions should possess, as well as the relationships between the spectrum of certain operators and the learning process. Based on this, we also propose an alternative activation function, the full-wave rectified exponential function (FReX), and we discuss the convergence of the gradient descent with this alternative activation function."
+      "arxiv_id": "2603.02417",
+      "title": "Fisher-Geometric Diffusion in Stochastic Gradient Descent: Optimal Rates, Oracle Complexity, and Information-Theoretic Limits",
+      "authors": ["Daniel Zantedeschi", "Kumar Muthuraman"],
+      "primary_category": "stat.ML",
+      "score": 0.92,
+      "why": "Core optimization-dynamics paper: endogenizes the SGD noise covariance via the sampling mechanism (projected Fisher information), then derives matching upper/lower oracle-complexity bounds in the Fisher metric. Directly extends the SDE-for-SGD line from your taste anchors (Battash et al., Jain et al.) with a structural identification of the diffusion coefficient rather than assuming it exogenously.",
+      "abstract": "Classical stochastic-approximation analyses treat the covariance of stochastic gradients as an exogenous modeling input. We show that under exchangeable mini-batch sampling this covariance is identified by the sampling mechanism itself: to leading order it is the projected covariance of per-sample gradients. In well-specified likelihood problems this reduces locally to projected Fisher information; for general M-estimation losses the same object is the projected gradient covariance G*(theta), which together with the Hessian induces sandwich/Godambe geometry. This identification -- not the subsequent diffusion or Lyapunov machinery, which is classical once the noise matrix is given -- is the paper's main contribution. It endogenizes the diffusion coefficient (with effective temperature tau = eta/b), determines the stationary covariance via a Lyapunov equation whose inputs are now structurally fixed, and selects the identified statistical geometry as the natural metric for convergence analysis. We prove matching upper and lower bounds of order Theta(1/N) for risk in this metric under an oracle budget N; the lower bound is established first via a van Trees argument in the parametric Fisher setting and then extended to adaptive oracle transcripts under a predictable-information condition and mild conditional likelihood regularity. Translating these bounds into oracle complexity yields epsilon-stationarity guarantees in the Fisher dual norm that depend on an intrinsic effective dimension d_eff and a statistical condition number kappa_F, rather than ambient dimension or Euclidean conditioning. Numerical experiments confirm the Lyapunov predictions at both continuous-time and discrete-time levels and show that scalar temperature matching cannot reproduce directional noise structure."
     },
     {
-      "arxiv_id": "2604.07925",
-      "title": "Sinkhorn doubly stochastic attention rank decay analysis",
-      "authors": ["Michela Lapenna", "Rita Fioresi", "Bahman Gharesifard"],
-      "primary_category": "cs.LG",
-      "score": 0.61,
-      "why": "Transformer training-dynamics flavor: theoretical bound on rank collapse under Sinkhorn-normalized attention, showing doubly exponential decay with depth. Adjacent to why Muon / preconditioning matter for deep networks.",
-      "abstract": "The self-attention mechanism is central to the success of Transformer architectures. However, standard row-stochastic attention has been shown to suffer from significant signal degradation across layers. In particular, it can induce rank collapse, resulting in increasingly uniform token representations, as well as entropy collapse. Recent work has highlighted the benefits of doubly stochastic attention as a form of entropy regularization. In this paper, we study rank collapse across network depth and show that doubly stochastic attention matrices normalized with Sinkhorn algorithm preserve rank more effectively than standard Softmax row-stochastic ones. We derive a theoretical bound for the pure self-attention rank decay when using Sinkhorn normalization and find that rank decays to one doubly exponentially with depth."
-    },
-    {
-      "arxiv_id": "2604.07972",
-      "title": "Smooth, globally Polyak-Łojasiewicz functions are nonlinear least-squares",
-      "authors": ["Nicolas Boumal", "Christopher Criscitiello", "Quentin Rebjock"],
+      "arxiv_id": "2604.08742",
+      "title": "Adam-HNAG: A Convergent Reformulation of Adam with Accelerated Rate",
+      "authors": ["Yaxin Yu", "Long Chen", "Zeyi Xu"],
       "primary_category": "math.OC",
-      "score": 0.56,
-      "why": "Structural rigidity result for the PŁ condition — the standard \"beyond strong convexity\" assumption used everywhere in deep-learning optimization theory. Boumal et al. show smooth PŁ functions on contractible manifolds are *exactly* nonlinear sums-of-squares, which directly bears on what assumptions do and do not constrain landscape geometry.",
-      "abstract": "The Polyak-Łojasiewicz (PŁ) condition is often invoked in nonconvex optimization because it allows fast convergence of algorithms beyond strong convexity. A function f on a Riemannian manifold M is globally PŁ if ||∇f(x)||² ≥ 2μ(f(x) − f*) for all x. We show that if f is also smooth and M is contractible, then the PŁ condition imposes a firm global structure: such a function is necessarily of the form f(x) = f* + ||φ(x)||² (a nonlinear sum of squares) where φ is a submersion. The proof hinges on showing that the end-point map of negative gradient flow on f is a trivial smooth fiber bundle over S. This leads to a striking dichotomy: either the minimizer set is diffeomorphic to Euclidean space (and f becomes a convex quadratic under smooth coordinates), or S must display genuinely exotic geometry."
+      "score": 0.82,
+      "why": "First convergence proof for an Adam-type method in convex optimization, achieved by decoupling adaptive preconditioning from momentum via operator splitting. Directly relevant to your interest in understanding spectral/preconditioned optimizers (Muon, Adam) theoretically. The Lyapunov analysis framework may connect to the scaling-law machinery in Kunstner & Bach.",
+      "abstract": "Adam has achieved strong empirical success, but its theory remains incomplete even in the deterministic full-batch setting, largely because adaptive preconditioning and momentum are tightly coupled. In this work, a convergent reformulation of full-batch Adam is developed by combining variable and operator splitting with a curvature-aware gradient correction. This leads to a continuous-time Adam-HNAG flow with an exponentially decaying Lyapunov function, as well as two discrete methods: Adam-HNAG, and Adam-HNAG-s, a synchronous variant closer in form to Adam. Within a unified Lyapunov analysis framework, convergence guarantees are established for both methods in the convex smooth setting, including accelerated convergence. Numerical experiments support the theory and illustrate the different empirical behavior of the two discretizations. To the best of our knowledge, this provides the first convergence proof for Adam-type methods in convex optimization."
     },
     {
-      "arxiv_id": "2604.08236",
-      "title": "Improved Convergence for Decentralized Stochastic Optimization with Biased Gradients",
-      "authors": ["Qing Xu", "Yiwei Liao", "Wenqi Fan", "Xingxing You", "Songyi Dian"],
+      "arxiv_id": "2604.09263",
+      "title": "Natural Riemannian gradient for learning functional tensor networks",
+      "authors": ["Nikolas Klug", "Michael Ulbrich", "André Uschmajew", "Marius Willner"],
       "primary_category": "math.OC",
-      "score": 0.42,
-      "why": "SGD-style nonconvex convergence theory, but in the decentralized + biased-gradient-oracle regime. Tangential to your core interest (optimization dynamics of single-node deep learning), but the bias-handling analysis could be useful if you care about compressed-communication effects on training.",
-      "abstract": "Decentralized stochastic optimization has emerged as a fundamental paradigm for large-scale machine learning. However, practical implementations often rely on biased gradient estimators arising from communication compression or inexact local oracles, which severely degrade convergence. We propose Decentralized Momentum Tracking with Biased Gradients (Biased-DMT). We establish a comprehensive convergence theory in nonconvex settings and show it achieves linear speedup in the number of agents. The analysis decouples network topology from data heterogeneity. When the gradient oracle introduces only absolute bias, the method eliminates structural heterogeneity error and converges to the exact physical error floor."
+      "score": 0.52,
+      "why": "Natural gradient (Fisher-metric preconditioning) applied to tensor network optimization. The basis-invariance property and the hierarchy of practical approximations echo the motivation behind Muon-style matrix preconditioners. Weaker match because the application is tensor decomposition rather than neural net training.",
+      "abstract": "We consider machine learning tasks with low-rank functional tree tensor networks (TTN) as the learning model. While in the case of least-squares regression, low-rank functional TTNs can be efficiently optimized using alternating optimization, this is not directly possible in other problems, such as multinomial logistic regression. We propose a natural Riemannian gradient descent type approach applicable to arbitrary losses which is based on the natural gradient by Amari. In particular, the search direction obtained by the natural gradient is independent of the choice of basis of the underlying functional tensor product space. Our framework applies to both the factorized and manifold-based approach for representing the functional TTN. For practical application, we propose a hierarchy of efficient approximations to the true natural Riemannian gradient for computing the updates in the parameter space. Numerical experiments confirm our theoretical findings on common classification datasets and show that using natural Riemannian gradient descent for learning considerably improves convergence behavior when compared to standard Riemannian gradient methods."
     },
     {
-      "arxiv_id": "2604.08219",
-      "title": "Stochastic Momentum Tracking Push-Pull for Decentralized Optimization over Directed Graphs",
-      "authors": ["Wenqi Fan", "Yiwei Liao", "Qing Xu", "Bin Guo", "Songyi Dian"],
+      "arxiv_id": "2604.08580",
+      "title": "Adjoint Matching through the Lens of the Stochastic Maximum Principle in Optimal Control",
+      "authors": ["Carles Domingo-Enrich", "Jiequn Han"],
       "primary_category": "math.OC",
-      "score": 0.38,
-      "why": "Momentum + variance reduction analysis, but again in the decentralized-network regime rather than centralized deep-learning training. Skim-level interest.",
-      "abstract": "Decentralized optimization over directed networks is frequently challenged by asymmetric communication and the inherent high variance of stochastic gradients. We propose the Stochastic Momentum Tracking Push-Pull (SMTPP) algorithm, which tracks the momentum term rather than raw stochastic gradients within the Push-Pull architecture. This design decouples the variance reduction capacity from the algebraic connectivity of the graph. SMTPP rigorously compresses the unavoidable steady-state error floor into a minimal neighborhood determined by network connectivity and gradient variance."
+      "score": 0.40,
+      "why": "Rigorous SDE-based optimal control for diffusion/flow model fine-tuning. The continuous-time successive-approximation interpretation is interesting from a training-dynamics perspective, though the application (generative modeling) is outside your core focus.",
+      "abstract": "Reward fine-tuning of diffusion and flow models and sampling from tilted or Boltzmann distributions can both be formulated as stochastic optimal control (SOC) problems, where learning an optimal generative dynamics corresponds to optimizing a control under SDE constraints. In this work, we revisit and generalize Adjoint Matching, a recently proposed SOC-based method for learning optimal controls, and place it on a rigorous footing by deriving it from the Stochastic Maximum Principle (SMP). We formulate a general Hamiltonian adjoint matching objective for SOC problems with control-dependent drift and diffusion and convex running costs, and show that its expected value has the same first variation as the original SOC objective. As a consequence, critical points satisfy the Hamilton--Jacobi--Bellman (HJB) stationarity conditions. In the important practical case of state- and control-independent diffusion, we recover the lean adjoint matching loss previously introduced in adjoint matching, which avoids second-order terms and whose critical points coincide with the optimal control under mild uniqueness assumptions. Finally, we show that adjoint matching can be precisely interpreted as a continuous-time method of successive approximations induced by the SMP, yielding a practical and implementable alternative to classical SMP-based algorithms, which are obstructed by intractable martingale terms in the stochastic setting."
     },
     {
-      "arxiv_id": "2604.07662",
-      "title": "Parameter-free non-ergodic extragradient algorithms for solving monotone variational inequalities",
-      "authors": ["Lingqing Shen", "Fatma Kılınç-Karzan"],
+      "arxiv_id": "2604.09245",
+      "title": "A Nesterov-Accelerated Primal-Dual Splitting Algorithm for Convex Nonsmooth Optimization",
+      "authors": ["Laurent Condat", "Abdurakhmon Sadiev", "Peter Richtárik"],
+      "primary_category": "math.OC",
+      "score": 0.35,
+      "why": "Optimal O(1/t^2) rates for accelerated primal-dual splitting via a unified Lyapunov framework. Methodologically solid first-order-methods theory from Richtarik's group. Tangential to your core interests but the Lyapunov technique may be reusable.",
+      "abstract": "We investigate the integration of Nesterov-type acceleration into primal-dual methods for structured convex optimization. While proximal splitting algorithms efficiently handle composite problems of the form $\\min_x f(x)+g(x)+h(Kx)$, accelerating their convergence with respect to the smooth term $f$ is notoriously challenging due to the rotational dynamics in the primal-dual space. In this paper, we overcome this barrier by proposing the Accelerated Proximal Alternating Predictor-Corrector algorithm (APAPC), focusing on the setting where $g(x)=\\frac{μ_g}{2}\\|x\\|^2$. Our analysis reveals that Nesterov momentum can be seamlessly integrated into a primal-dual forward-backward scheme by exploiting the strong convexity of the dual problem to stabilize the accelerated primal updates. Using a unified Lyapunov framework, we establish optimal $O(1/t^2)$ sublinear convergence rates, as well as accelerated linear convergence when $μ_g > 0$, across three regimes of dual strong convexity."
+    },
+    {
+      "arxiv_id": "2603.25182",
+      "title": "Learning Monge maps with constrained drifting models",
+      "authors": ["Théo Dumont", "Théo Lacombe", "François-Xavier Vialard"],
+      "primary_category": "math.OC",
+      "score": 0.33,
+      "why": "Natural gradient descent in the space of convex-potential neural networks for learning OT maps, outperforming Adam. The interplay between geometry of the parameter space and optimizer choice resonates with the preconditioner theme, though the setting is optimal transport rather than standard training.",
+      "abstract": "We study the estimation of optimal transport (OT) maps between an arbitrary source probability measure and a log-concave target probability measure. Our contributions are twofold. First, we propose a new evolution equation in the set of transport maps. It can be seen as the gradient flow of a lift of some user-chosen divergence (e.g., the KL divergence, or relative entropy) to the space of transport maps, constrained to the convex set of optimal transport maps. We prove the existence of long-time solutions to this flow as well as its convergence toward the OT map as time goes to infinity, under standard convexity conditions on the divergence. Second, we study the practical implementation of this constrained gradient flow. We propose two time-discrete computational schemes-one explicit, one implicit-, and we prove the convergence of the latter to the OT map as time goes to infinity. We then parameterize the OT maps with convexity-constrained neural networks and train them with these discretizations of the constrained gradient flow. We show that this is equivalent to performing a natural gradient descent of the lift of the chosen divergence in the neural networks' parameter space, similarly to drifting generative models."
+    },
+    {
+      "arxiv_id": "2506.11267",
+      "title": "Towards faster first order methods: A continuous-time model to interpolate between speed and function value restart",
+      "authors": ["Juan José Maulén", "Huiyuan Guo", "Juan Peypouquet"],
       "primary_category": "math.OC",
       "score": 0.28,
-      "why": "Last-iterate convergence analysis — interesting from a dynamics lens since most SGD theory also moved from averaged to last-iterate recently. Not directly about deep-learning optimizers, but the proof techniques travel.",
-      "abstract": "Monotone variational inequalities provide a unifying framework for convex minimization, equilibrium computation, and convex-concave saddle-point problems. We develop parameter-free extragradient methods with non-asymptotic last-iterate guarantees. For globally Lipschitz operators, our algorithm achieves an o(1/√T) last-iterate rate. We then extend the framework to locally Lipschitz operators via backtracking line search."
+      "why": "Continuous-time ODE analysis of accelerated methods with Hessian-driven damping and adaptive restarts. Parameter-free (no need for strong convexity constant). Niche but connects to the optimization-dynamics viewpoint.",
+      "abstract": "We introduce a new restarting scheme for a continuous inertial dynamics with Hessian driven-damping, and establish a linear convergence rate for the function values along the restarted trajectories. The proposed routine is implemented without knowing the strong convexity parameter, and is a generalization of existing speed restart schemes. It interpolates between speed and function value restarts, considerably delaying the restarting time, while preserving convergence and function value decrease. Numerical experiments show an improvement in the convergence rates for both continuous-time dynamical systems, and the associated accelerated first-order algorithms derived via time discretization."
     }
   ]
 }

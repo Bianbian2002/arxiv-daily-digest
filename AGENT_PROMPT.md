@@ -21,10 +21,10 @@ linear bigram, noisy quadratic model).
    pip install -q -r requirements.txt
    ```
 
-2. Fetch today's math.OC candidates (single query covers cross-listed
-   cs.LG / stat.ML papers because they appear in `cat:math.OC`):
+2. Fetch today's math.OC candidates (uses the RSS feed for same-day
+   discovery, then batch-queries the API for full metadata):
    ```
-   python fetch_arxiv.py --hours 30 --out candidates.json
+   python fetch_arxiv.py --out candidates.json
    ```
 
 3. Read `taste.bib` to internalize the researcher's taste anchors. Also read
