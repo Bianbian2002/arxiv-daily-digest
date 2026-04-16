@@ -1,51 +1,121 @@
 {
-  "date": "2026-04-14",
-  "summary": "A quiet day for the core taste areas — no paper directly addresses SGD noise models, scaling laws, or sign/preconditioned optimizers. The closest hits are an algorithmic analysis of Dense Associative Memory (connecting to the Hopfield/Muon taste anchor), a momentum-based stochastic augmented-Lagrangian method for constrained nonconvex optimization, and a scaled-gradient-momentum continuous-time flow with finite-time convergence. A survey on optimizer evolution covers the full SGD/Adam landscape. Most math.OC submissions are MPC, reachability, applied OR, or PDE control.",
+  "date": "2026-04-15",
+  "summary": "A solid day for optimization dynamics. The top result directly connects to the Edge of Stochastic Stability literature, studying how momentum interacts with batch size to produce two distinct sharpness plateaus—a direct match for the researcher's interest in SGD noise models and training dynamics. Several other papers address last-iterate convergence of SGD/GD, constant-stepsize stochastic approximation with Markovian noise, and adaptive gradient methods. The day is light on spectral/sign optimizer work and scaling-law papers.",
   "papers": [
     {
-      "arxiv_id": "2604.12811",
-      "title": "Algorithmic Analysis of Dense Associative Memory: Finite-Size Guarantees and Adversarial Robustness",
-      "authors": ["Madhava Gaikwad"],
+      "arxiv_id": "2604.14108",
+      "title": "Momentum Further Constrains Sharpness at the Edge of Stochastic Stability",
+      "authors": [
+        "Arseniy Andreyev",
+        "Advikar Ananthkumar",
+        "Marc Walden",
+        "Tomaso Poggio",
+        "Pierfrancesco Beneventano"
+      ],
       "primary_category": "cs.LG",
-      "score": 0.62,
-      "why": "Dense Associative Memory (DAM/Hopfield networks) is directly in the Muon-in-associative-memory taste orbit (Li et al. anchor). This paper moves beyond thermodynamic-limit analyses to finite-N convergence guarantees for asynchronous retrieval dynamics, derives capacity scaling Theta(N^{n-1}) under explicit pattern separation, and establishes adversarial robustness bounds — providing algorithmic grounding for the memory-network intuitions behind Muon.",
-      "abstract": "Dense Associative Memory (DAM) generalizes Hopfield networks through higher-order interactions and achieves storage capacity that scales as $O(N^{n-1})$ under suitable pattern separation conditions. Existing dynamical analyses primarily study the thermodynamic limit $N\\to\\infty$ with randomly sampled patterns and therefore do not provide finite-size guarantees or explicit convergence rates. We develop an algorithmic analysis of DAM retrieval dynamics that yields finite-$N$ guarantees under explicit, verifiable pattern conditions. Under a separation assumption and a bounded-interference condition at high loading, we prove geometric convergence of asynchronous retrieval dynamics, which implies $O(\\log N)$ convergence time once the trajectory enters the basin of attraction. We further establish adversarial robustness bounds expressed through an explicit margin condition that quantifies the number of corrupted bits tolerable per sweep, and derive capacity guarantees that scale as $\\Theta(N^{n-1})$ up to polylogarithmic factors in the worst case, while recovering the classical $\\Theta(N^{n-1})$ scaling for random pattern ensembles. Finally, we show that DAM retrieval dynamics admit a potential-game interpretation that ensures convergence to pure Nash equilibria under asynchronous updates."
+      "score": 0.90,
+      "why": "Directly extends the Edge of Stochastic Stability framework to SGD with momentum, showing batch-size-dependent sharpness in two regimes (2(1-beta)/eta at small batch, 2(1+beta)/eta at large batch)—a crisp result connecting SGD as a stochastic process, noise models, and training dynamics to momentum and batch-size hyperparameters.",
+      "abstract": "Recent work suggests that (stochastic) gradient descent self-organizes near an instability boundary, shaping both optimization and the solutions found. Momentum and mini-batch gradients are widely used in practical deep learning optimization, but it remains unclear whether they operate in a comparable regime of instability. We demonstrate that SGD with momentum exhibits an Edge of Stochastic Stability (EoSS)-like regime with batch-size-dependent behavior that cannot be explained by a single momentum-adjusted stability threshold. Batch Sharpness (the expected directional mini-batch curvature) stabilizes in two distinct regimes: at small batch sizes it converges to a lower plateau $2(1-\\beta)/\\eta$, reflecting amplification of stochastic fluctuations by momentum and favoring flatter regions than vanilla SGD; at large batch sizes it converges to a higher plateau $2(1+\\beta)/\\eta$, where momentum recovers its classical stabilizing effect and favors sharper regions consistent with full-batch dynamics. We further show that this aligns with linear stability thresholds and discuss the implications for hyperparameter tuning and coupling."
+    },
+    {
+      "arxiv_id": "2604.13870",
+      "title": "Gradient Descent's Last Iterate is Often (slightly) Suboptimal",
+      "authors": [
+        "Guy Kornowski",
+        "Ohad Shamir"
+      ],
+      "primary_category": "math.OC",
+      "score": 0.72,
+      "why": "Proves that without advance knowledge of T, no step-size schedule can achieve the optimal O(1/sqrt(T)) last-iterate rate for SGD (or even GD), settling a conjecture by Jain et al.—a fundamental negative result on anytime optimization that directly bears on weight-averaging and stopping-time considerations in training dynamics.",
+      "abstract": "We consider the well-studied setting of minimizing a convex Lipschitz function using either gradient descent (GD) or its stochastic variant (SGD), and examine the last iterate convergence. By now, it is known that standard stepsize choices lead to a last iterate convergence rate of $\\log T/\\sqrt{T}$ after $T$ steps. A breakthrough result of Jain et al. [2019] recovered the optimal $1/\\sqrt{T}$ rate by constructing a non-standard stepsize sequence. However, this sequence requires choosing $T$ in advance, as opposed to common stepsize schedules which apply for any time horizon. Moreover, Jain et al. conjectured that without prior knowledge of $T$, no stepsize sequence can ensure the optimal error for SGD's last iterate, a claim which so far remained unproven. We prove this conjecture, and in fact show that even in the noiseless case of GD, it is impossible to avoid an excess poly-log factor in $T$ when considering an anytime last iterate guarantee. Our proof further suggests that such (slightly) suboptimal stopping times are unavoidably common."
+    },
+    {
+      "arxiv_id": "2604.13378",
+      "title": "Revisiting the Constant Stepsize Stochastic Approximation with Decision-Dependent Markovian Noise",
+      "authors": [
+        "Hadi Hadavi",
+        "Wenlong Mou",
+        "Sergey Samsonov",
+        "Hoi-To Wai"
+      ],
+      "primary_category": "math.OC",
+      "score": 0.65,
+      "why": "Characterizes the O(alpha) stationary bias of constant-stepsize SA under Markovian (decision-dependent) noise, establishes geometric weak convergence to a stationary distribution and a functional CLT—directly relevant to the Markov-chain / noise-model view of SGD dynamics and connects to the researcher's interest in SGD as a stochastic process.",
+      "abstract": "We revisit the convergence analysis of constant stepsize stochastic approximation (SA) with decision-dependent Markovian noise, with a focus on characterizing the stationary bias against the root of the mean-field equation. We first establish the finite-time $p$-th moment bounds for the SA iterates in a general decision-dependent setting, which serve as a stability foundation for the subsequent analysis. Building on this foundation, and leveraging a local regularity condition termed Poisson--Gateaux differentiability (WD$^\\ast$) for the solution to Poisson equation induced by the decision-dependent Markov kernel, we show that the stationary bias is of the order $\\mathcal{O}(\\alpha)$ for a broad class of decision-dependent settings. Additionally, we establish geometric weak convergence of the joint SA process towards a unique stationary distribution, and a functional central limit theorem. Our relaxed regularity condition enables us to cover cases of non-smooth kernels such as acceptance--rejection mechanisms, projected Langevin dynamics, and clipped state dynamics."
+    },
+    {
+      "arxiv_id": "2604.14017",
+      "title": "Stochastic Trust-Region Methods for Over-parameterized Models",
+      "authors": [
+        "Aike Yang",
+        "Hao Wang"
+      ],
+      "primary_category": "math.OC",
+      "score": 0.50,
+      "why": "Proposes a step-size-free stochastic trust-region framework for overparameterized (interpolation-regime) models, directly addressing SGD's sensitivity to learning-rate choice—adjacent to the researcher's interest in optimization dynamics and SGD in interpolation regimes.",
+      "abstract": "Under interpolation-type assumptions such as the strong growth condition, stochastic optimization methods can attain convergence rates comparable to full-batch methods, but their performance, particularly for SGD, remains highly sensitive to step-size selection. To address this issue, we propose a unified stochastic trust-region framework that eliminates manual step-size tuning and extends naturally to equality-constrained problems. For unconstrained optimization, we develop a first-order stochastic trust-region algorithm and show that, under the strong growth condition, it achieves an iteration and stochastic first-order oracle complexity of $O(\\varepsilon^{-2} \\log(1/\\varepsilon))$ for finding an $\\varepsilon$-stationary point. For equality-constrained problems, we introduce a quadratic-penalty-based stochastic trust-region method with penalty parameter $\\mu$, and establish an iteration and oracle complexity of $O(\\varepsilon^{-4} \\log(1/\\varepsilon))$ to reach an $\\varepsilon$-stationary point of the penalized problem, corresponding to an $O(\\varepsilon)$-approximate KKT point of the original constrained problem. Numerical experiments on deep neural network training and orthogonally constrained subspace fitting demonstrate that the proposed methods achieve performance comparable to well-tuned stochastic baselines, while exhibiting stable optimization behavior and effectively handling hard constraints without manual learning-rate scheduling."
+    },
+    {
+      "arxiv_id": "2604.13393",
+      "title": "A short proof of near-linear convergence of adaptive gradient descent under fourth-order growth and convexity",
+      "authors": [
+        "Damek Davis",
+        "Dmitriy Drusvyatskiy"
+      ],
+      "primary_category": "math.OC",
+      "score": 0.38,
+      "why": "Gives a Lyapunov-based proof that adaptive stepsize gradient descent achieves near-linear local convergence for convex objectives with fourth-order growth—adjacent interest as adaptive gradient methods, though the setting is more classical optimization than the ML-optimizer context the researcher cares about.",
+      "abstract": "Davis, Drusvyatskiy, and Jiang showed that gradient descent with an adaptive stepsize converges locally at a nearly-linear rate for smooth functions that grow at least quartically away from their minimizers. The argument is intricate, relying on monitoring the performance of the algorithm relative to a certain manifold of slow growth -- called the ravine. In this work, we provide a direct Lyapunov-based argument that bypasses these difficulties when the objective is in addition convex and a has a unique minimizer. As a byproduct of the argument, we obtain a more adaptive variant than the original algorithm with encouraging numerical performance."
+    },
+    {
+      "arxiv_id": "2604.13388",
+      "title": "Convergence of the Iterates of the Stochastic Proximal Gradient Method",
+      "authors": [
+        "Javier I. Madariaga"
+      ],
+      "primary_category": "math.OC",
+      "score": 0.35,
+      "why": "Derives almost-sure and mean convergence of iterates for stochastic proximal gradient under minimal variance assumptions—moderate interest as a result about SGD-type iterate behavior, though the composite convex setting is somewhat removed from the researcher's ML training dynamics focus.",
+      "abstract": "We propose a novel study of the stochastic proximal gradient method for minimizing the sum of two convex functions, one of which is smooth. Under suitable assumptions and without requiring any boundedness or control of the variance of the random variables, we derive the almost sure convergence and the convergence in the mean of the iterates to a solution of the minimization problem. The results are applied to classification and convex feasibility problems."
     },
     {
       "arxiv_id": "2604.13272",
       "title": "A Momentum-based Stochastic Algorithm for Linearly Constrained Nonconvex Optimization",
-      "authors": ["Chenyang Qiu", "Mihitha Maithripala", "Zongli Lin"],
+      "authors": [
+        "Chenyang Qiu",
+        "Mihitha Maithripala",
+        "Zongli Lin"
+      ],
       "primary_category": "math.OC",
-      "score": 0.42,
-      "why": "Analyzes a Polyak-momentum augmented-Lagrangian method with one stochastic gradient per iteration, establishing O(epsilon^{-4}) complexity under the standard bounded-variance oracle — adjacent to SGD noise modeling and momentum dynamics. The Polyak estimator angle is a mild connection to the noisy quadratic model intuition.",
-      "abstract": "This paper studies a stochastic algorithm for linearly constrained nonconvex optimization, where the objective function is smooth but only unbiased stochastic gradients with bounded variance are available. We propose a momentum-based augmented Lagrangian method that employs a Polyak-type gradient estimator and requires only one stochastic gradient evaluation per iteration. Under the standard stochastic oracle model and the smoothness condition of the expected objective, we establish a convergence guarantee in terms of the first-order KKT residual of the original constrained problem. In particular, the proposed method computes an $\\epsilon$-stationary solution in expectation within $O(\\epsilon^{-4})$ stochastic gradient evaluations. Numerical experiments further show that the proposed method achieves competitive iteration complexity and improved wall-clock efficiency compared with representative recursive-momentum baselines."
-    },
-    {
-      "arxiv_id": "2604.12751",
-      "title": "Finite-Time Optimization via Scaled Gradient-Momentum Flows",
-      "authors": ["Yu Zhou", "Mengmou Li", "Masaaki Nagahara"],
-      "primary_category": "math.OC",
-      "score": 0.36,
-      "why": "Develops a state-dependent scaling mechanism applied to Heavy-Ball and PI-type continuous-time flows, achieving finite-time global convergence under gradient dominance. Adjacent to preconditioned/scaled optimizer analysis (Adam, Muon) and the continuous-time ODE view of momentum methods.",
-      "abstract": "In this paper, we develop a scaled gradient-momentum framework for continuous-time optimization that achieves global finite-time convergence. A state-dependent scaling mechanism is introduced to enable classical dynamics, such as Heavy-Ball-type and proportional-integral (PI)-type flows, to attain finite-time convergence. We establish explicit conditions that bridge the gradient-dominance property of the objective function and finite-time stability of the proposed scaled dynamics. Numerical experiments validate the theoretical results."
-    },
-    {
-      "arxiv_id": "2604.12968",
-      "title": "Evolution of Optimization Methods: Algorithms, Scenarios, and Evaluations",
-      "authors": ["Tong Zhang", "Jiangning Zhang", "Zhucun Xue"],
-      "primary_category": "cs.LG",
       "score": 0.30,
-      "why": "Comprehensive survey covering SGD, Adam, second-order methods, and zeroth-order optimizers with empirical evaluation across diverse architectures — useful as a map of the optimizer landscape the researcher works in, though surveys rarely drive new insights.",
-      "abstract": "Balancing convergence speed, generalization capability, and computational efficiency remains a core challenge in deep learning optimization. First-order gradient descent methods, epitomized by stochastic gradient descent (SGD) and Adam, serve as the cornerstone of modern training pipelines. However, large-scale model training, stringent differential privacy requirements, and distributed learning paradigms expose critical limitations in these conventional approaches regarding privacy protection and memory efficiency. To mitigate these bottlenecks, researchers explore second-order optimization techniques to surpass first-order performance ceilings, while zeroth-order methods reemerge to alleviate memory constraints inherent to large-scale training. Despite this proliferation of methodologies, the field lacks a cohesive framework that unifies underlying principles and delineates application scenarios for these disparate approaches. In this work, we retrospectively analyze the evolutionary trajectory of deep learning optimization algorithms and present a comprehensive empirical evaluation of mainstream optimizers across diverse model architectures and training scenarios."
+      "why": "Proposes a Polyak-momentum augmented Lagrangian method for constrained nonconvex stochastic optimization with O(eps^{-4}) complexity—weak match, tangentially relevant via momentum and stochastic gradient dynamics but the constrained nonconvex focus is not core taste.",
+      "abstract": "This paper studies a stochastic algorithm for linearly constrained nonconvex optimization, where the objective function is smooth but only unbiased stochastic gradients with bounded variance are available. We propose a momentum-based augmented Lagrangian method that employs a Polyak-type gradient estimator and requires only one stochastic gradient evaluation per iteration. Under the standard stochastic oracle model and the smoothness condition of the expected objective, we establish a convergence guarantee in terms of the first-order KKT residual of the original constrained problem. In particular, the proposed method computes an $\\varepsilon$-stationary solution in expectation within $O(\\varepsilon^{-4})$ stochastic gradient evaluations. Numerical experiments further show that the proposed method achieves competitive iteration complexity and improved wall-clock efficiency compared with representative recursive-momentum baselines."
     },
     {
-      "arxiv_id": "2604.12334",
-      "title": "On additive averaging kernels for finite Markov chains",
-      "authors": ["Ryan J. Y. Lim", "Michael C. H. Choi"],
-      "primary_category": "math.PR",
+      "arxiv_id": "2604.13022",
+      "title": "Classical and Quantum Speedups for Non-Convex Optimization via Energy Conserving Descent",
+      "authors": [
+        "Yihang Sun",
+        "Huaijin Wang",
+        "Patrick Hayden",
+        "Jose Blanchet"
+      ],
+      "primary_category": "quant-ph",
       "score": 0.28,
-      "why": "Studies convex mixtures of Markov kernels and their spectral gap / mixing time — conceptually adjacent to the SGD Markov chain perspective and iterate averaging taste anchors. The spectral analysis of additive Gibbs mixtures parallels the analysis of averaging in stochastic optimization, though the focus is MCMC rather than ML training.",
-      "abstract": "We study additive mixtures of Markov kernels of the form $A_\\alpha = \\alpha P + (1-\\alpha)G$, where $\\alpha\\in[0,1]$, $P$ is a baseline sampler and $G$ is a Gibbs kernel induced by a partition of the state space. We motivate the study of $A_\\alpha$ as a projection of a lifted Markov chain and minimize distance to stationarity under two objectives: the squared Frobenius norm and the KL divergence. For the Frobenius objective, explicit trace formulas identify a Cheeger-type functional for optimal two-block partitions, admitting a difference-of-submodular decomposition. Geometric decay rates are governed by the absolute spectral gap of $P$. Numerical experiments on the Curie-Weiss model show that intermediate values of $\\alpha$ achieve the best convergence, reflecting a trade-off between local exploration and global averaging."
+      "why": "Computes hitting times for a stochastic variant of ECD vs SGD, proving exponential speedup for escaping local minima—weak match, the stochastic dynamics vs SGD comparison is the relevant angle, but the quantum focus and double-well setting are far from the researcher's tractable-proxy taste.",
+      "abstract": "The Energy Conserving Descent (ECD) algorithm was recently proposed (De Luca & Silverstein, 2022) as a global non-convex optimization method. Unlike gradient descent, appropriately configured ECD dynamics escape strict local minima and converge to a global minimum, making it appealing for machine learning optimization. We present the first analytical study of ECD, focusing on the one-dimensional setting for this first installment. We formalize a stochastic ECD dynamics (sECD) with energy-preserving noise, as well as a quantum analog of the ECD Hamiltonian (qECD), providing the foundation for a quantum algorithm through Hamiltonian simulation. For positive double-well objectives, we compute the expected hitting time from a local to the global minimum. We prove that both sECD and qECD yield exponential speedup over respective gradient descent baselines--stochastic gradient descent and its quantization. For objectives with tall barriers, qECD achieves a further speedup over sECD."
+    },
+    {
+      "arxiv_id": "2604.12235",
+      "title": "Last-Iterate Convergence of Anchored Gradient Descent",
+      "authors": [
+        "Yang Cai",
+        "Weiqiang Zheng"
+      ],
+      "primary_category": "math.OC",
+      "score": 0.27,
+      "why": "Extends anchored gradient descent to monotone inclusions and proves O(1/sqrt(T)) last-iterate convergence—weak connection, adjacent to the last-iterate vs averaging question, but the saddle-point/variational-inequality setting is not the researcher's core focus.",
+      "abstract": "We study the monotone inclusion problem $0\\in F(z)+A(z)$, where $F$ is monotone and Lipschitz, and $A$ is maximally monotone, a framework that encompasses monotone variational inequalities and convex-concave saddle-point problems with constraints or regularization. It is well known that vanilla gradient descent diverges for this problem, whereas optimism-based methods such as Extragradient and accelerated methods that combine both optimism and anchoring, such as Extra Anchored Gradient, achieve last-iterate convergence. However, the anchoring-only method, anchored gradient descent, has been studied only in the unconstrained setting [RYY19, SST+26]. In this note, we extend the anchored gradient descent method to the monotone inclusion problem and prove a last-iterate convergence rate of $O(1/\\sqrt{T})$ in terms of the tangent residual. We build on the recent proof in the unconstrained setting [SST+26] and use techniques from [COZ24] to extend it to the general inclusion setting."
     }
   ]
 }
