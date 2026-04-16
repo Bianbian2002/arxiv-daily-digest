@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arxiv Digest — 2026-04-14</title>
+<style>
+:root { --fg:#222; --muted:#777; --accent:#b0413e; --border:#e5e5e5; --bg:#fdfdfc; --card:#f7f5ef; }
+* { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+       max-width: 760px; margin: 3em auto; padding: 0 1.2em;
+       color: var(--fg); background: var(--bg); line-height: 1.6; }
+h1 { font-size: 1.5em; border-bottom: 2px solid var(--fg); padding-bottom: .3em; margin-bottom: .3em; }
+.sub { color: var(--muted); font-size: .92em; margin-top: 0; }
+.nav { margin-bottom: 2em; }
+.nav a { color: var(--muted); text-decoration: none; font-size: .9em; }
+.nav a:hover { color: var(--accent); }
+.summary { background: var(--card); padding: 1em 1.2em; border-radius: 4px;
+           margin: 1.5em 0 2em; font-size: .95em; color: #333; }
+.paper { margin: 2em 0; padding-bottom: 1.6em; border-bottom: 1px solid var(--border); }
+.paper:last-child { border-bottom: none; }
+.score { float: right; font-weight: 600; color: var(--accent); font-size: .95em;
+         font-variant-numeric: tabular-nums; }
+.paper h2 { font-size: 1.1em; margin: 0 0 .35em; line-height: 1.35; font-weight: 600; }
+.paper h2 a { color: var(--fg); text-decoration: none; }
+.paper h2 a:hover { color: var(--accent); }
+.meta { color: var(--muted); font-size: .88em; margin-bottom: .6em; }
+.why { background: var(--card); border-left: 3px solid var(--accent);
+       padding: .55em .85em; margin: .6em 0; font-size: .93em; color: #3a3a3a; }
+.abstract { color: #444; font-size: .93em; }
+.abstract.collapsed { max-height: 5.2em; overflow: hidden; position: relative; }
+.abstract.collapsed::after { content: ""; position: absolute; bottom: 0; left: 0; right: 0;
+                              height: 2em; background: linear-gradient(transparent, var(--bg)); }
+details { font-size: .9em; margin-top: .4em; }
+details summary { cursor: pointer; color: var(--muted); }
+details[open] summary { color: var(--accent); }
+footer { margin-top: 4em; color: var(--muted); font-size: .85em; text-align: center; }
+</style>
+</head>
+<body>
+<div class="nav"><a href="../index.html">← all digests</a></div>
+<h1>Arxiv Daily Digest</h1>
+<p class="sub">2026-04-14 · math.OC &amp; cross-listed · optimization dynamics, spectral optimizers</p>
+
+<div class="summary">A quiet day for the core taste areas — no paper directly addresses SGD noise models, scaling laws, or sign/preconditioned optimizers. The closest hits are an algorithmic analysis of Dense Associative Memory (connecting to the Hopfield/Muon taste anchor), a momentum-based stochastic augmented-Lagrangian method for constrained nonconvex optimization, and a scaled-gradient-momentum continuous-time flow with finite-time convergence. A survey on optimizer evolution covers the full SGD/Adam landscape. Most math.OC submissions are MPC, reachability, applied OR, or PDE control.</div>
+
+
+<article class="paper">
+  <span class="score" title="taste match">0.62</span>
+  <h2><a href="https://arxiv.org/abs/2604.12811">Algorithmic Analysis of Dense Associative Memory: Finite-Size Guarantees and Adversarial Robustness</a></h2>
+  <div class="meta">Madhava Gaikwad · arXiv:2604.12811 · cs.LG</div>
+  <div class="why">Dense Associative Memory (DAM/Hopfield networks) is directly in the Muon-in-associative-memory taste orbit (Li et al. anchor). This paper moves beyond thermodynamic-limit analyses to finite-N convergence guarantees for asynchronous retrieval dynamics, derives capacity scaling Theta(N^{n-1}) under explicit pattern separation, and establishes adversarial robustness bounds — providing algorithmic grounding for the memory-network intuitions behind Muon.</div>
+  <details>
+    <summary>abstract</summary>
+    <div class="abstract">Dense Associative Memory (DAM) generalizes Hopfield networks through higher-order interactions and achieves storage capacity that scales as $O(N^{n-1})$ under suitable pattern separation conditions. Existing dynamical analyses primarily study the thermodynamic limit $N\to\infty$ with randomly sampled patterns and therefore do not provide finite-size guarantees or explicit convergence rates. We develop an algorithmic analysis of DAM retrieval dynamics that yields finite-$N$ guarantees under explicit, verifiable pattern conditions. Under a separation assumption and a bounded-interference condition at high loading, we prove geometric convergence of asynchronous retrieval dynamics, which implies $O(\log N)$ convergence time once the trajectory enters the basin of attraction. We further establish adversarial robustness bounds expressed through an explicit margin condition that quantifies the number of corrupted bits tolerable per sweep, and derive capacity guarantees that scale as $\Theta(N^{n-1})$ up to polylogarithmic factors in the worst case, while recovering the classical $\Theta(N^{n-1})$ scaling for random pattern ensembles. Finally, we show that DAM retrieval dynamics admit a potential-game interpretation that ensures convergence to pure Nash equilibria under asynchronous updates.</div>
+  </details>
+</article>
+
+<article class="paper">
+  <span class="score" title="taste match">0.42</span>
+  <h2><a href="https://arxiv.org/abs/2604.13272">A Momentum-based Stochastic Algorithm for Linearly Constrained Nonconvex Optimization</a></h2>
+  <div class="meta">Chenyang Qiu, Mihitha Maithripala, Zongli Lin · arXiv:2604.13272 · math.OC</div>
+  <div class="why">Analyzes a Polyak-momentum augmented-Lagrangian method with one stochastic gradient per iteration, establishing O(epsilon^{-4}) complexity under the standard bounded-variance oracle — adjacent to SGD noise modeling and momentum dynamics. The Polyak estimator angle is a mild connection to the noisy quadratic model intuition.</div>
+  <details>
+    <summary>abstract</summary>
+    <div class="abstract">This paper studies a stochastic algorithm for linearly constrained nonconvex optimization, where the objective function is smooth but only unbiased stochastic gradients with bounded variance are available. We propose a momentum-based augmented Lagrangian method that employs a Polyak-type gradient estimator and requires only one stochastic gradient evaluation per iteration. Under the standard stochastic oracle model and the smoothness condition of the expected objective, we establish a convergence guarantee in terms of the first-order KKT residual of the original constrained problem. In particular, the proposed method computes an $\epsilon$-stationary solution in expectation within $O(\epsilon^{-4})$ stochastic gradient evaluations. Numerical experiments further show that the proposed method achieves competitive iteration complexity and improved wall-clock efficiency compared with representative recursive-momentum baselines.</div>
+  </details>
+</article>
+
+<article class="paper">
+  <span class="score" title="taste match">0.36</span>
+  <h2><a href="https://arxiv.org/abs/2604.12751">Finite-Time Optimization via Scaled Gradient-Momentum Flows</a></h2>
+  <div class="meta">Yu Zhou, Mengmou Li, Masaaki Nagahara · arXiv:2604.12751 · math.OC</div>
+  <div class="why">Develops a state-dependent scaling mechanism applied to Heavy-Ball and PI-type continuous-time flows, achieving finite-time global convergence under gradient dominance. Adjacent to preconditioned/scaled optimizer analysis (Adam, Muon) and the continuous-time ODE view of momentum methods.</div>
+  <details>
+    <summary>abstract</summary>
+    <div class="abstract">In this paper, we develop a scaled gradient-momentum framework for continuous-time optimization that achieves global finite-time convergence. A state-dependent scaling mechanism is introduced to enable classical dynamics, such as Heavy-Ball-type and proportional-integral (PI)-type flows, to attain finite-time convergence. We establish explicit conditions that bridge the gradient-dominance property of the objective function and finite-time stability of the proposed scaled dynamics. Numerical experiments validate the theoretical results.</div>
+  </details>
+</article>
+
+<article class="paper">
+  <span class="score" title="taste match">0.30</span>
+  <h2><a href="https://arxiv.org/abs/2604.12968">Evolution of Optimization Methods: Algorithms, Scenarios, and Evaluations</a></h2>
+  <div class="meta">Tong Zhang, Jiangning Zhang, Zhucun Xue · arXiv:2604.12968 · cs.LG</div>
+  <div class="why">Comprehensive survey covering SGD, Adam, second-order methods, and zeroth-order optimizers with empirical evaluation across diverse architectures — useful as a map of the optimizer landscape the researcher works in, though surveys rarely drive new insights.</div>
+  <details>
+    <summary>abstract</summary>
+    <div class="abstract">Balancing convergence speed, generalization capability, and computational efficiency remains a core challenge in deep learning optimization. First-order gradient descent methods, epitomized by stochastic gradient descent (SGD) and Adam, serve as the cornerstone of modern training pipelines. However, large-scale model training, stringent differential privacy requirements, and distributed learning paradigms expose critical limitations in these conventional approaches regarding privacy protection and memory efficiency. To mitigate these bottlenecks, researchers explore second-order optimization techniques to surpass first-order performance ceilings, while zeroth-order methods reemerge to alleviate memory constraints inherent to large-scale training. Despite this proliferation of methodologies, the field lacks a cohesive framework that unifies underlying principles and delineates application scenarios for these disparate approaches. In this work, we retrospectively analyze the evolutionary trajectory of deep learning optimization algorithms and present a comprehensive empirical evaluation of mainstream optimizers across diverse model architectures and training scenarios.</div>
+  </details>
+</article>
+
+<article class="paper">
+  <span class="score" title="taste match">0.28</span>
+  <h2><a href="https://arxiv.org/abs/2604.12334">On additive averaging kernels for finite Markov chains</a></h2>
+  <div class="meta">Ryan J. Y. Lim, Michael C. H. Choi · arXiv:2604.12334 · math.PR</div>
+  <div class="why">Studies convex mixtures of Markov kernels and their spectral gap / mixing time — conceptually adjacent to the SGD Markov chain perspective and iterate averaging taste anchors. The spectral analysis of additive Gibbs mixtures parallels the analysis of averaging in stochastic optimization, though the focus is MCMC rather than ML training.</div>
+  <details>
+    <summary>abstract</summary>
+    <div class="abstract">We study additive mixtures of Markov kernels of the form $A_\alpha = \alpha P + (1-\alpha)G$, where $\alpha\in[0,1]$, $P$ is a baseline sampler and $G$ is a Gibbs kernel induced by a partition of the state space. We motivate the study of $A_\alpha$ as a projection of a lifted Markov chain and minimize distance to stationarity under two objectives: the squared Frobenius norm and the KL divergence. For the Frobenius objective, explicit trace formulas identify a Cheeger-type functional for optimal two-block partitions, admitting a difference-of-submodular decomposition. Geometric decay rates are governed by the absolute spectral gap of $P$. Numerical experiments on the Curie-Weiss model show that intermediate values of $\alpha$ achieve the best convergence, reflecting a trade-off between local exploration and global averaging.</div>
+  </details>
+</article>
+
+
+<footer>Generated by a scheduled Claude agent · <a href="https://github.com/Bianbian2002/arxiv-daily-digest">source</a></footer>
+</body>
+</html>
